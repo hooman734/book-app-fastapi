@@ -1,7 +1,5 @@
-from typing import Optional, Union
-
+from typing import Union
 from fastapi import FastAPI, HTTPException, Depends
-from uuid import UUID
 from sqlalchemy.orm import Session
 
 import models
@@ -72,7 +70,7 @@ async def add_book(new_book: Book, db: Session = Depends(get_db)):
 
 # Delete a book
 @app.delete("/api/v1/book/{book_id}")
-async def delete_by_id(book_id: UUID, db: Session = Depends(get_db)):
+async def delete_by_id(book_id: str, db: Session = Depends(get_db)):
     book_model = db.query(models.Books).filter(book_id == models.Books.id).first()
     if book_model is None:
         raise HTTPException(404, f"Book with ID: {book_id} not found!")
@@ -109,7 +107,7 @@ async def edit_by_id(book_id: str,
 
 # Edit a book - with body
 @app.put("/api/v1/book/{book_id}")
-async def edit_by_id(book_id: UUID, new_book: Book, db: Session = Depends(get_db)):
+async def edit_by_id(book_id: str, new_book: Book, db: Session = Depends(get_db)):
     book_model = db.query(models.Books).filter(book_id == models.Books.id).first()
     if book_model is None:
         raise HTTPException(404, f"Book with ID: {book_id} not found!")
