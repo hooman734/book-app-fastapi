@@ -12,14 +12,10 @@ job("Publish to Docker Hub") {
         }
 
         dockerBuildPush {
-            labels["vendor"] = "mycompany"
+            labels["vendor"] = "hesamian"
             tags {
-                +"myrepo/hello-from-space:1.0.${"$"}JB_SPACE_EXECUTION_NUMBER"
+                +"hooman777/fastapi:1.0.${"$"}JB_SPACE_EXECUTION_NUMBER"
             }
-            content = """
-            	docker build . --file Dockerfile --tag fastapi:$(date+%s)
-             	docker push fastapi:$(date+%s)
-            """
         }
     }
 }
